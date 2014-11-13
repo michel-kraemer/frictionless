@@ -8,9 +8,11 @@ var yargs = require("yargs")
         "first commit).")
     .example("friction", "check the current directory")
     .example("friction dir1 dir2", "check directories `dir1' and `dir2' ")
-    .boolean(["h", "V"])
+    .boolean(["colors", "h", "V"])
+    .default("colors", true)
     .alias("h", "help")
     .alias("V", "version")
+    .describe("no-colors", "disable colored output")
     .describe("h", "display this help and exit")
     .describe("V", "display version information and exit");
 
