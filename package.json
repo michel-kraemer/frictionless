@@ -1,0 +1,34 @@
+{
+  "name": "friction",
+  "version": "1.0.0",
+  "description": "Check your projects to avoid contributor friction and reduce TTFC (time to first commit)",
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/michel-kraemer/node-friction.git"
+  },
+  "keywords": [
+    "contributor",
+    "friction",
+    "projects",
+    "opensource",
+    "checker",
+    "linter"
+  ],
+  "author": "Michel Kraemer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/michel-kraemer/node-friction/issues"
+  },
+  "homepage": "https://github.com/michel-kraemer/node-friction",
+  "dependencies": {
+    "yargs": "^1.3.2"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.10",
+    "gulp-jscs": "^1.3.0",
+    "gulp-jshint": "^1.9.0",
+    "gulp-jasmine": "^1.0.1",
+    "a": "^0.4.6"
+  }
+}

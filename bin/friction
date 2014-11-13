@@ -1,0 +1,23 @@
+#!/usr/bin/env node
+
+var cli = require("../lib/cli");
+
+var yargs = require("yargs")
+    .usage("Usage: friction [OPTION]... [DIR]...\n" +
+        "Check your projects to avoid contributor friction and reduce TTFC (time to\n" +
+        "first commit).")
+    .example("friction", "check the current directory")
+    .example("friction dir1 dir2", "check directories `dir1' and `dir2' ")
+    .boolean(["h", "V"])
+    .alias("h", "help")
+    .alias("V", "version")
+    .describe("h", "display this help and exit")
+    .describe("V", "display version information and exit");
+
+var argv = yargs.argv;
+
+if (argv.help) {
+    console.log(yargs.help());
+} else {
+    cli(argv);
+}
