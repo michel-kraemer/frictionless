@@ -37,7 +37,7 @@ describe("node-friction", function() {
         ]);
     });
 
-    it("should report missing README", function() {
+    function expectFileChecked(file) {
         fs.existsSync.and.callFake(function(dir) {
             if (dir == "test") {
                 return true;
@@ -48,7 +48,17 @@ describe("node-friction", function() {
         var r = friction(["test"]);
 
         expect(fs.existsSync).toHaveBeenCalledWith("test");
-        expect(fs.existsSync).toHaveBeenCalledWith(path.join("test", "README"));
-        expect(r).toEqual([{dir: "test", errors: [errors.README]}]);
+        expect(fs.existsSync).toHaveBeenCalledWith(path.join("test", file));
+        expect(r.length).toBe(1);
+        expect(r[0].dir).toBe("test");
+        expect(r[0].errors).toContain(errors[file]);
+    }
+
+    it("should report missing README", function() {
+        expectFileChecked("README");
+    });
+
+    it("should report missing LICENSE", function() {
+        expectFileChecked("LICENSE");
     });
 });
