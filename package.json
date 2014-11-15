@@ -1,11 +1,11 @@
 {
-  "name": "friction",
+  "name": "frictionless",
   "version": "1.0.0",
   "description": "Check your projects to avoid contributor friction and reduce TTFC (time to first commit)",
   "main": "lib/index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/michel-kraemer/node-friction.git"
+    "url": "git://github.com/michel-kraemer/frictionless.git"
   },
   "keywords": [
     "contributor",
@@ -18,9 +18,9 @@
   "author": "Michel Kraemer",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/michel-kraemer/node-friction/issues"
+    "url": "https://github.com/michel-kraemer/frictionless/issues"
   },
-  "homepage": "https://github.com/michel-kraemer/node-friction",
+  "homepage": "https://github.com/michel-kraemer/frictionless",
   "dependencies": {
     "yargs": "^1.3.2",
     "colors": "^1.0.3",

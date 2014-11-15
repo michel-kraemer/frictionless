@@ -1,22 +1,22 @@
 var mocks = require("mocks");
 
-describe("node-friction cli", function() {
-    var friction;
+describe("frictionless cli", function() {
+    var frictionless;
     var cli;
 
     beforeEach(function() {
-        // mock 'friction' module required by 'cli' module
-        friction = jasmine.createSpy("friction").and.returnValue([]);
-        cli = mocks.loadFile(__dirname + "/../lib/cli", {"./index": friction}).module.exports;
+        // mock 'frictionless' module required by 'cli' module
+        frictionless = jasmine.createSpy("frictionless").and.returnValue([]);
+        cli = mocks.loadFile(__dirname + "/../lib/cli", {"./index": frictionless}).module.exports;
     });
 
-    it("should call friction with current directory", function() {
+    it("should call frictionless with current directory", function() {
         cli({_: []});
-        expect(friction).toHaveBeenCalledWith(["."]);
+        expect(frictionless).toHaveBeenCalledWith(["."]);
     });
 
-    it("should call friction with destination directory", function() {
+    it("should call frictionless with destination directory", function() {
         cli({_: ['test']});
-        expect(friction).toHaveBeenCalledWith(["test"]);
+        expect(frictionless).toHaveBeenCalledWith(["test"]);
     });
 });

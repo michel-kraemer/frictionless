@@ -3,11 +3,11 @@
 var cli = require("../lib/cli");
 
 var yargs = require("yargs")
-    .usage("Usage: friction [OPTION]... [DIR]...\n" +
+    .usage("Usage: frictionless [OPTION]... [DIR]...\n" +
         "Check your projects to avoid contributor friction and reduce TTFC (time to\n" +
         "first commit).")
-    .example("friction", "check the current directory")
-    .example("friction dir1 dir2", "check directories `dir1' and `dir2' ")
+    .example("frictionless", "check the current directory")
+    .example("frictionless dir1 dir2", "check directories `dir1' and `dir2' ")
     .boolean(["no-colors", "h", "V"])
     .default("no-colors", false)
     .alias("h", "help")

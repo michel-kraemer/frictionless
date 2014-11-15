@@ -2,26 +2,26 @@ var errors = require("../lib/errors");
 var mocks = require("mocks");
 var path = require("path");
 
-describe("node-friction", function() {
+describe("frictionless", function() {
     var fs;
-    var friction;
+    var frictionless;
 
     beforeEach(function() {
         // mock 'fs' module required by 'index' module
         fs = jasmine.createSpyObj("fs", ["existsSync"]);
-        friction = mocks.loadFile(__dirname + "/../lib/index", {fs: fs}).module.exports;
+        frictionless = mocks.loadFile(__dirname + "/../lib/index", {fs: fs}).module.exports;
     });
 
     it("should report missing directory", function() {
         fs.existsSync.and.returnValue(false);
-        var r = friction("test");
+        var r = frictionless("test");
         expect(fs.existsSync).toHaveBeenCalledWith("test");
         expect(r).toEqual([{dir: "test", errors: [errors.DIR]}]);
     });
 
     it("should report missing directories", function() {
         fs.existsSync.and.returnValue(false);
-        var r = friction(["test", "test2"]);
+        var r = frictionless(["test", "test2"]);
         expect(fs.existsSync).toHaveBeenCalledWith("test");
         expect(fs.existsSync).toHaveBeenCalledWith("test2");
         expect(r).toEqual([
@@ -38,7 +38,7 @@ describe("node-friction", function() {
             return false;
         });
 
-        var r = friction(["test"]);
+        var r = frictionless(["test"]);
 
         expect(fs.existsSync).toHaveBeenCalledWith("test");
         expect(fs.existsSync).toHaveBeenCalledWith(path.join("test", file));
