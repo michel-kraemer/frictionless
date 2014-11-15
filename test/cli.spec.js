@@ -1,4 +1,4 @@
-var expectRequire = require("a").expectRequire;
+var mocks = require("mocks");
 
 describe("node-friction cli", function() {
     var friction;
@@ -7,14 +7,7 @@ describe("node-friction cli", function() {
     beforeEach(function() {
         // mock 'friction' module required by 'cli' module
         friction = jasmine.createSpy("friction").and.returnValue([]);
-        expectRequire("./index").return(friction);
-        cli = require("../lib/cli");
-    });
-
-    afterEach(function() {
-        // remove 'cli' module from require cache so we can
-        // mock it again
-        delete require.cache[require.resolve("../lib/cli")];
+        cli = mocks.loadFile(__dirname + "/../lib/cli", {"./index": friction}).module.exports;
     });
 
     it("should call friction with current directory", function() {

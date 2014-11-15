@@ -1,5 +1,5 @@
 var errors = require("../lib/errors");
-var expectRequire = require("a").expectRequire;
+var mocks = require("mocks");
 var path = require("path");
 
 describe("node-friction", function() {
@@ -9,19 +9,12 @@ describe("node-friction", function() {
     beforeEach(function() {
         // mock 'fs' module required by 'index' module
         fs = jasmine.createSpyObj("fs", ["existsSync"]);
-        expectRequire("fs").return(fs);
-        friction = require("../lib/index");
-    });
-
-    afterEach(function() {
-        // remove 'index' module from require cache so we can
-        // mock it again
-        delete require.cache[require.resolve("../lib/index")];
+        friction = mocks.loadFile(__dirname + "/../lib/index", {fs: fs}).module.exports;
     });
 
     it("should report missing directory", function() {
         fs.existsSync.and.returnValue(false);
-        var r = friction(["test"]);
+        var r = friction("test");
         expect(fs.existsSync).toHaveBeenCalledWith("test");
         expect(r).toEqual([{dir: "test", errors: [errors.DIR]}]);
     });
