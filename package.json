@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Check your projects to avoid contributor friction and reduce TTFC (time to first commit)",
   "main": "lib/index.js",
+  "bin": "bin/frictionless",
   "repository": {
     "type": "git",
     "url": "git://github.com/michel-kraemer/frictionless.git"
@@ -21,6 +22,7 @@
     "url": "https://github.com/michel-kraemer/frictionless/issues"
   },
   "homepage": "https://github.com/michel-kraemer/frictionless",
+  "preferGlobal": true,
   "dependencies": {
     "yargs": "^1.3.2",
     "colors": "^1.0.3",
