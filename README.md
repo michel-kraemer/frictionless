@@ -50,7 +50,7 @@ To get help just enter
 ## Contributing
 
 You've got an idea how to improve frictionless? Contributions are more than
-welcome! See the [CONTRIBUTING](CONTRIBUTING) guide for more information.
+welcome! See the [CONTRIBUTING](CONTRIBUTING.md) guide for more information.
 
 ## License
 
