@@ -26,9 +26,13 @@ describe("frictionless", function() {
             "test6": {
                 "MIT_LICENSE.md": 1
             },
+            "test7": {
+                ".gitignore": 1
+            },
             "testall": {
                 "README": 1,
-                "LICENSE": 1
+                "LICENSE": 1,
+                ".gitignore": 1
             }
         });
         spyOn(fs, "existsSync").and.callThrough();
@@ -52,66 +56,54 @@ describe("frictionless", function() {
         ]);
     });
 
-    function expectMissingFile(file, pattern) {
+    function expectMissingFile(file, pattern, error) {
         var r = frictionless(["/test1"]);
         expect(fs.existsSync).toHaveBeenCalledWith("/test1");
         expect(fs.readdirSync).toHaveBeenCalledWith("/test1");
         expect(r.length).toBe(1);
         expect(r[0].dir).toBe("/test1");
-        expect(r[0].errors).toContain(errors[file]);
+        expect(r[0].errors).toContain(errors[error]);
+    }
+
+    function expectExistingFile(dir, error) {
+        var r = frictionless([dir]);
+        expect(fs.existsSync).toHaveBeenCalledWith(dir);
+        expect(fs.readdirSync).toHaveBeenCalledWith(dir);
+        expect(r.length).toBe(1);
+        expect(r[0].dir).toBe(dir);
+        expect(r[0].errors).not.toContain(errors[error]);
     }
 
     it("should report missing README", function() {
-        expectMissingFile("README", "README*");
+        expectMissingFile("README", "README*", "README");
     });
 
     it("should report missing LICENSE", function() {
-        expectMissingFile("LICENSE", "*LICENSE*");
+        expectMissingFile("LICENSE", "*LICENSE*", "LICENSE");
+    });
+
+    it("should report missing .gitignore", function() {
+        expectMissingFile(".gitignore", ".gitignore", "GITIGNORE");
     });
 
     it("should not report existing README", function() {
-        var r = frictionless(["/test2"]);
-        expect(fs.existsSync).toHaveBeenCalledWith("/test2");
-        expect(fs.readdirSync).toHaveBeenCalledWith("/test2");
-        expect(r.length).toBe(1);
-        expect(r[0].dir).toBe("/test2");
-        expect(r[0].errors).not.toContain(errors.README);
+        expectExistingFile("/test2", "README");
     });
 
     it("should not report existing LICENSE", function() {
-        var r = frictionless(["/test3"]);
-        expect(fs.existsSync).toHaveBeenCalledWith("/test3");
-        expect(fs.readdirSync).toHaveBeenCalledWith("/test3");
-        expect(r.length).toBe(1);
-        expect(r[0].dir).toBe("/test3");
-        expect(r[0].errors).not.toContain(errors.LICENSE);
+        expectExistingFile("/test3", "LICENSE");
     });
 
     it("should not report existing README.md", function() {
-        var r = frictionless(["/test4"]);
-        expect(fs.existsSync).toHaveBeenCalledWith("/test4");
-        expect(fs.readdirSync).toHaveBeenCalledWith("/test4");
-        expect(r.length).toBe(1);
-        expect(r[0].dir).toBe("/test4");
-        expect(r[0].errors).not.toContain(errors.README);
+        expectExistingFile("/test4", "README");
     });
 
     it("should not report existing MIT_LICENSE", function() {
-        var r = frictionless(["/test5"]);
-        expect(fs.existsSync).toHaveBeenCalledWith("/test5");
-        expect(fs.readdirSync).toHaveBeenCalledWith("/test5");
-        expect(r.length).toBe(1);
-        expect(r[0].dir).toBe("/test5");
-        expect(r[0].errors).not.toContain(errors.LICENSE);
+        expectExistingFile("/test5", "LICENSE");
     });
 
     it("should not report existing MIT_LICENSE.md", function() {
-        var r = frictionless(["/test6"]);
-        expect(fs.existsSync).toHaveBeenCalledWith("/test6");
-        expect(fs.readdirSync).toHaveBeenCalledWith("/test6");
-        expect(r.length).toBe(1);
-        expect(r[0].dir).toBe("/test6");
-        expect(r[0].errors).not.toContain(errors.LICENSE);
+        expectExistingFile("/test6", "LICENSE");
     });
 
     it("should not report nothing", function() {
