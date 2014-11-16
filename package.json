@@ -28,6 +28,9 @@
     "colors": "^1.0.3",
     "underscore": "^1.7.0"
   },
+  "scripts": {
+    "test": "npm install && gulp check"
+  },
   "devDependencies": {
     "gulp": "^3.8.10",
     "gulp-jscs": "^1.3.0",
