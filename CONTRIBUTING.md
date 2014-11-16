@@ -3,19 +3,31 @@
 You've got an idea how to improve frictionless? Contributions are more than
 welcome! Here's a quick guide.
 
-1. [Fork the repository][fork]
+1. Install prerequisites
 
-2. Clone your fork
+        npm install -g gulp
+
+2. [Fork the repository][fork]
+
+3. Clone your fork
 
         git clone git@github.com:your-username/frictionless.git
 
-3. Make your contribution
+4. Run bootstrap script to install node dependencies
 
-4. Run tests and other checks
+        ./script/bootstrap
+
+5. Make your contribution
+
+6. Run tests and other checks
 
         gulp check
 
-5. Push to your fork and [submit a pull request][pr].
+   or
+
+        ./script/test
+
+7. Push to your fork and [submit a pull request][pr].
 
 6. Wait for your pull request to be merged.
 
