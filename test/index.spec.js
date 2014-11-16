@@ -27,11 +27,15 @@ describe("frictionless", function() {
                 "MIT_LICENSE.md": 1
             },
             "test7": {
+                "CONTRIBUTING": 1
+            },
+            "test8": {
                 ".gitignore": 1
             },
             "testall": {
                 "README": 1,
                 "LICENSE": 1,
+                "CONTRIBUTING": 1,
                 ".gitignore": 1
             }
         });
@@ -56,7 +60,8 @@ describe("frictionless", function() {
         ]);
     });
 
-    function expectMissingFile(file, pattern, error) {
+    function expectMissingFile(file, error) {
+        error = error || file;
         var r = frictionless(["/test1"]);
         expect(fs.existsSync).toHaveBeenCalledWith("/test1");
         expect(fs.readdirSync).toHaveBeenCalledWith("/test1");
@@ -75,15 +80,19 @@ describe("frictionless", function() {
     }
 
     it("should report missing README", function() {
-        expectMissingFile("README", "README*", "README");
+        expectMissingFile("README");
     });
 
     it("should report missing LICENSE", function() {
-        expectMissingFile("LICENSE", "*LICENSE*", "LICENSE");
+        expectMissingFile("LICENSE");
+    });
+
+    it("should report missing CONTRIBUTING guide", function() {
+        expectMissingFile("CONTRIBUTING");
     });
 
     it("should report missing .gitignore", function() {
-        expectMissingFile(".gitignore", ".gitignore", "GITIGNORE");
+        expectMissingFile(".gitignore", "GITIGNORE");
     });
 
     it("should not report existing README", function() {
@@ -104,6 +113,14 @@ describe("frictionless", function() {
 
     it("should not report existing MIT_LICENSE.md", function() {
         expectExistingFile("/test6", "LICENSE");
+    });
+
+    it("should not report existing CONTRIBUTING guide", function() {
+        expectExistingFile("/test7", "CONTRIBUTING");
+    });
+
+    it("should not report existing .gitignore file", function() {
+        expectExistingFile("/test8", "GITIGNORE");
     });
 
     it("should not report nothing", function() {
