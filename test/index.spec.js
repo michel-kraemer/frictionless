@@ -5,9 +5,10 @@ var path = require("path");
 describe("frictionless", function() {
     var fs;
     var frictionless;
+    var path;
 
     beforeEach(function() {
-        // mock 'fs' module required by 'index' module
+        // mock 'fs' and 'path' modules required by 'index' module
         fs = mocks.fs.create({
             "test1": {
             },
@@ -32,16 +33,35 @@ describe("frictionless", function() {
             "test8": {
                 ".gitignore": 1
             },
+            "test9": {
+                "script": {
+                    "bootstrap": 1
+                }
+            },
             "testall": {
                 "README": 1,
                 "LICENSE": 1,
                 "CONTRIBUTING": 1,
-                ".gitignore": 1
+                ".gitignore": 1,
+                "script": {
+                    "bootstrap": 1
+                }
             }
         });
+
+        path = jasmine.createSpyObj("path", ["join"]);
+        path.join.and.callFake(function(a, b) {
+            // do not use windows backslashes. the fs mock won't work with that.
+            return a + "/" + b;
+        });
+
         spyOn(fs, "existsSync").and.callThrough();
         spyOn(fs, "readdirSync").and.callThrough();
-        frictionless = mocks.loadFile(__dirname + "/../lib/index", {fs: fs}).module.exports;
+
+        frictionless = mocks.loadFile(__dirname + "/../lib/index", {
+            fs: fs,
+            path: path
+        }).module.exports;
     });
 
     it("should report missing directory", function() {
@@ -60,8 +80,7 @@ describe("frictionless", function() {
         ]);
     });
 
-    function expectMissingFile(file, error) {
-        error = error || file;
+    function expectMissingFile(error) {
         var r = frictionless(["/test1"]);
         expect(fs.existsSync).toHaveBeenCalledWith("/test1");
         expect(fs.readdirSync).toHaveBeenCalledWith("/test1");
@@ -92,7 +111,11 @@ describe("frictionless", function() {
     });
 
     it("should report missing .gitignore", function() {
-        expectMissingFile(".gitignore", "GITIGNORE");
+        expectMissingFile("GITIGNORE");
+    });
+
+    it("should report missing boostrap script", function() {
+        expectMissingFile("BOOTSTRAP");
     });
 
     it("should not report existing README", function() {
@@ -123,7 +146,11 @@ describe("frictionless", function() {
         expectExistingFile("/test8", "GITIGNORE");
     });
 
-    it("should not report nothing", function() {
+    it("should not report existing boostrap script", function() {
+        expectExistingFile("/test9", "BOOTSTRAP");
+    });
+
+    it("should report nothing", function() {
         var r = frictionless(["/testall"]);
         expect(fs.existsSync).toHaveBeenCalledWith("/testall");
         expect(fs.readdirSync).toHaveBeenCalledWith("/testall");
