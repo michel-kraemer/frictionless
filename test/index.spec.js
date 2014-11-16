@@ -38,13 +38,19 @@ describe("frictionless", function() {
                     "bootstrap": 1
                 }
             },
+            "test10": {
+                "script": {
+                    "test": 1
+                }
+            },
             "testall": {
                 "README": 1,
                 "LICENSE": 1,
                 "CONTRIBUTING": 1,
                 ".gitignore": 1,
                 "script": {
-                    "bootstrap": 1
+                    "bootstrap": 1,
+                    "test": 1
                 }
             }
         });
@@ -118,6 +124,10 @@ describe("frictionless", function() {
         expectMissingFile("BOOTSTRAP");
     });
 
+    it("should report missing test script", function() {
+        expectMissingFile("TEST");
+    });
+
     it("should not report existing README", function() {
         expectExistingFile("/test2", "README");
     });
@@ -148,6 +158,10 @@ describe("frictionless", function() {
 
     it("should not report existing boostrap script", function() {
         expectExistingFile("/test9", "BOOTSTRAP");
+    });
+
+    it("should not report existing test script", function() {
+        expectExistingFile("/test10", "TEST");
     });
 
     it("should report nothing", function() {
