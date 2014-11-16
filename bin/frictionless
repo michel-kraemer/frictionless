@@ -18,9 +18,15 @@ var yargs = require("yargs")
     .strict();
 
 var argv = yargs.argv;
+var exitCode = 0;
 
 if (argv.help) {
     console.log(yargs.help());
 } else {
-    cli(argv);
+    exitCode = cli(argv, console.log);
 }
+
+// wait for console to be flushed before exiting with 'exitCode'
+process.on("exit", function() {
+    process.exit(exitCode);
+});
