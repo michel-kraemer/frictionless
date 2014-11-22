@@ -1,3 +1,4 @@
+var constants = require("../lib/constants");
 var errors = require("../lib/errors");
 var mocks = require("mocks");
 var path = require("path");
@@ -92,7 +93,18 @@ describe("frictionless", function() {
         expect(fs.readdirSync).toHaveBeenCalledWith("/test1");
         expect(r.length).toBe(1);
         expect(r[0].dir).toBe("/test1");
+        expect(r[0].errors.length).toBeGreaterThan(1);
         expect(r[0].errors).toContain(errors[error]);
+    }
+
+    function expectSkipFile(error) {
+        var r = frictionless(["/test1"], [constants["SKIP_" + error]]);
+        expect(fs.existsSync).toHaveBeenCalledWith("/test1");
+        expect(fs.readdirSync).toHaveBeenCalledWith("/test1");
+        expect(r.length).toBe(1);
+        expect(r[0].dir).toBe("/test1");
+        expect(r[0].errors.length).toBeGreaterThan(1);
+        expect(r[0].errors).not.toContain(errors[error]);
     }
 
     function expectExistingFile(dir, error) {
@@ -126,6 +138,30 @@ describe("frictionless", function() {
 
     it("should report missing test script", function() {
         expectMissingFile("TEST");
+    });
+
+    it("should skip missing README", function() {
+        expectSkipFile("README");
+    });
+
+    it("should skip missing LICENSE", function() {
+        expectSkipFile("LICENSE");
+    });
+
+    it("should skip missing CONTRIBUTING guide", function() {
+        expectSkipFile("CONTRIBUTING");
+    });
+
+    it("should skip missing .gitignore", function() {
+        expectSkipFile("GITIGNORE");
+    });
+
+    it("should skip missing boostrap script", function() {
+        expectSkipFile("BOOTSTRAP");
+    });
+
+    it("should skip missing test script", function() {
+        expectSkipFile("TEST");
     });
 
     it("should not report existing README", function() {
