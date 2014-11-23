@@ -49,4 +49,10 @@ describe("frictionless cli", function() {
             constants.SKIP_CONTRIBUTING, constants.SKIP_GITIGNORE,
             constants.SKIP_BOOTSTRAP, constants.SKIP_TEST]);
     });
+
+    it("should skip all scripts", function() {
+        expect(cli({skipScripts: true, _: ['test']}, log)).toBe(0);
+        expect(frictionless).toHaveBeenCalledWith(["test"], [
+            constants.SKIP_BOOTSTRAP, constants.SKIP_TEST]);
+    });
 });
